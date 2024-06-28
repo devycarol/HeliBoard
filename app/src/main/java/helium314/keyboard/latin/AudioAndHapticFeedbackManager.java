@@ -82,7 +82,7 @@ public final class AudioAndHapticFeedbackManager {
             return;
         }
         final int sound = switch (code) {
-            case KeyCode.DELETE -> AudioManager.FX_KEYPRESS_DELETE;
+            case KeyCode.DELETE, KeyCode.DELETE_WORD -> AudioManager.FX_KEYPRESS_DELETE;
             case Constants.CODE_ENTER -> AudioManager.FX_KEYPRESS_RETURN;
             case Constants.CODE_SPACE -> AudioManager.FX_KEYPRESS_SPACEBAR;
             default -> AudioManager.FX_KEYPRESS_STANDARD;

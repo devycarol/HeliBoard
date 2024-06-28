@@ -89,6 +89,7 @@ Usually the label is what is displayed on the key. However, there are some speci
   * _language_switch_: language switch key
   * _action_: the action (enter) key
   * _delete_: delete key
+  * _delete_word_: word-delete key
   * _shift_: shift key, will change label when in symbols layout
   * _period_: `.` key with punctuation popups, will adapt to language-specific period
   * _comma_: `,` key with special popups, will adapt to language-specific comma, or display `/` in URL fields and `@` in email fields

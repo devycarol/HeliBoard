@@ -35,6 +35,8 @@
     <string name="spoken_description_caps_lock">Shift</string>
     <!-- Spoken description for the "Delete" keyboard key. -->
     <string name="spoken_description_delete">Delete</string>
+    <!-- Spoken description for the "Delete word" keyboard key. -->
+    <string name="spoken_description_delete_word">Delete word</string>
     <!-- Spoken description for the "To Symbol" keyboard key. -->
     <string name="spoken_description_to_symbol">Symbols</string>
     <!-- Spoken description for the "To Alpha" keyboard key. -->

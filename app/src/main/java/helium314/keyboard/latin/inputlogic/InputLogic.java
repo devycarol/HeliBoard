@@ -674,6 +674,13 @@ public final class InputLogic {
                 // Backspace is a functional key, but it affects the contents of the editor.
                 inputTransaction.setDidAffectContents();
                 break;
+            case KeyCode.DELETE_WORD:
+                // todo: this approach might be frowned upon, has similar issue to word left/right
+                // (but at least doesn't fail to delete punctuations at the start of text)
+                sendDownUpKeyEventWithMetaState(KeyEvent.KEYCODE_DEL, KeyEvent.META_CTRL_ON);
+                // Back-word is a functional key, but it affects the contents of the editor.
+                inputTransaction.setDidAffectContents();
+                break;
             case KeyCode.SHIFT:
                 performRecapitalization(inputTransaction.getMSettingsValues());
                 inputTransaction.requireShiftUpdate(InputTransaction.SHIFT_UPDATE_NOW);

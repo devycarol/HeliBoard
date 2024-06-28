@@ -438,7 +438,7 @@ sealed interface KeyData : AbstractKeyData {
         // functional keys
         when (label) { // or use code?
             KeyLabel.SYMBOL_ALPHA, KeyLabel.SYMBOL, KeyLabel.ALPHA, KeyLabel.COMMA, KeyLabel.PERIOD, KeyLabel.DELETE,
-            KeyLabel.COM, KeyLabel.LANGUAGE_SWITCH, KeyLabel.NUMPAD, KeyLabel.CTRL, KeyLabel.ALT,
+            KeyLabel.DELETE_WORD, KeyLabel.COM, KeyLabel.LANGUAGE_SWITCH, KeyLabel.NUMPAD, KeyLabel.CTRL, KeyLabel.ALT,
             KeyLabel.FN, KeyLabel.META, toolbarKeyStrings[ToolbarKey.EMOJI] -> return Key.BACKGROUND_TYPE_FUNCTIONAL
             KeyLabel.SPACE, KeyLabel.ZWNJ -> return Key.BACKGROUND_TYPE_SPACEBAR
             KeyLabel.ACTION -> return Key.BACKGROUND_TYPE_ACTION
@@ -475,6 +475,8 @@ sealed interface KeyData : AbstractKeyData {
         KeyLabel.SPACE -> getSpaceLabel(params)
         KeyLabel.ACTION -> "${getActionKeyLabel(params)}|${getActionKeyCode(params)}"
         KeyLabel.DELETE -> "!icon/delete_key|!code/key_delete"
+        // todo: have a custom icon
+        KeyLabel.DELETE_WORD -> "!icon/delete_word_key|!code/key_delete_word"
         KeyLabel.SHIFT -> "${getShiftLabel(params)}|!code/key_shift"
 //        KeyLabel.EMOJI -> "!icon/emoji_normal_key|!code/key_emoji"
         // todo (later): label and popupKeys for .com should be in localeKeyTexts, handled similar to currency key

@@ -11,6 +11,7 @@
         <item name="iconShiftKeyShifted">@drawable/sym_keyboard_shift_rounded</item>
         <item name="iconShiftKeyLocked">@drawable/sym_keyboard_shift_lock_rounded</item>
         <item name="iconDeleteKey">@drawable/sym_keyboard_delete_rounded</item>
+        <item name="iconDeleteWordKey">@drawable/sym_keyboard_delete_holo</item>
         <item name="iconTabKey">@drawable/sym_keyboard_tab_rounded</item>
         <item name="iconSettingsKey">@drawable/sym_keyboard_settings_rounded</item>
         <item name="iconSpaceKey">@null</item>

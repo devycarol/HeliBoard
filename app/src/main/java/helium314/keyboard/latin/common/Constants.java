@@ -212,6 +212,7 @@ public final class Constants {
         case KeyCode.SYMBOL: return "symbol";
         case KeyCode.MULTIPLE_CODE_POINTS: return "text";
         case KeyCode.DELETE: return "delete";
+        case KeyCode.DELETE_WORD: return "delete_word";
         case KeyCode.SETTINGS: return "settings";
         case KeyCode.VOICE_INPUT: return "shortcut";
         case KeyCode.ACTION_NEXT: return "actionNext";

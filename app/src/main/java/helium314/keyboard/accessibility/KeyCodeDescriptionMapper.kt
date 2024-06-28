@@ -25,6 +25,7 @@ internal class KeyCodeDescriptionMapper private constructor() {
         // Special non-character codes defined in Keyboard
         put(Constants.CODE_SPACE, R.string.spoken_description_space)
         put(KeyCode.DELETE, R.string.spoken_description_delete)
+        put(KeyCode.DELETE_WORD, R.string.spoken_description_delete_word)
         put(Constants.CODE_ENTER, R.string.spoken_description_return)
         put(KeyCode.SETTINGS, R.string.spoken_description_settings)
         put(KeyCode.SHIFT, R.string.spoken_description_shift)

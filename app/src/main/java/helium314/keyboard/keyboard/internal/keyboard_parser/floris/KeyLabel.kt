@@ -10,6 +10,7 @@ object KeyLabel {
     const val LANGUAGE_SWITCH = "language_switch"
     const val ACTION = "action"
     const val DELETE = "delete"
+    const val DELETE_WORD = "delete_word"
     const val SHIFT = "shift"
     const val NUMPAD = "numpad"
     const val SYMBOL = "symbol"

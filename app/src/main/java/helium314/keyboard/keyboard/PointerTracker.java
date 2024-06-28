@@ -711,7 +711,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         return switch (code) {
             case Constants.CODE_SPACE -> sv.mSpaceSwipeHorizontal != KeyboardActionListener.SWIPE_NO_ACTION
                     || sv.mSpaceSwipeVertical != KeyboardActionListener.SWIPE_NO_ACTION;
-            case KeyCode.DELETE -> sv.mDeleteSwipeEnabled;
+            case KeyCode.DELETE, KeyCode.DELETE_WORD -> sv.mDeleteSwipeEnabled;
             default -> false;
         };
     }
@@ -912,8 +912,9 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
                     mStartX += stepsX * sPointerStep;
                 }
             }
-        } else if (code == KeyCode.DELETE) {
+        } else if (code == KeyCode.DELETE || code == KeyCode.DELETE_WORD) {
             // Delete slider
+            // todo: a word-by-word slider for the delete-word key would be ideal
             int steps = (x - mStartX) / sPointerStep;
             if (steps != 0) {
                 if (!mInHorizontalSwipe) {
@@ -1011,7 +1012,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         // Release the last pressed key.
         setReleasedKeyGraphics(currentKey, true);
 
-        if (mInHorizontalSwipe && currentKey.getCode() == KeyCode.DELETE) {
+        if (mInHorizontalSwipe && currentKey.isDeleter()) {
             sListener.onUpWithDeletePointerActive();
         }
 

@@ -231,6 +231,7 @@
              {@link helium314.keyboard.keyboard.internal.KeyboardIconsSet#NAMES_AND_ATTR_IDS} -->
         <attr name="iconShiftKey" format="reference" />
         <attr name="iconDeleteKey" format="reference" />
+        <attr name="iconDeleteWordKey" format="reference" />
         <attr name="iconSettingsKey" format="reference" />
         <attr name="iconSpaceKey" format="reference" />
         <attr name="iconEnterKey" format="reference" />
