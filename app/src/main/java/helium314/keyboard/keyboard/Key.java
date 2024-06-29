@@ -519,8 +519,16 @@ public class Key implements Comparable<Key> {
                 || mCode == KeyCode.CTRL || mCode == KeyCode.ALT || mCode == KeyCode.FN || mCode == KeyCode.META;
     }
 
-    public final boolean isDeleter() {
+    public final boolean isBackwardDeleter() {
         return mCode == KeyCode.DELETE || mCode == KeyCode.DELETE_WORD;
+    }
+
+    public final boolean isForwardDeleter() {
+        return mCode == KeyCode.FORWARD_DELETE || mCode == KeyCode.FORWARD_DELETE_WORD;
+    }
+
+    public final boolean isDeleter() {
+        return isBackwardDeleter() || isForwardDeleter();
     }
 
     public final boolean isRepeatable() {
@@ -1175,7 +1183,7 @@ public class Key implements Comparable<Key> {
             if (mCode <= Constants.CODE_SPACE && mCode != KeyCode.MULTIPLE_CODE_POINTS && mIconName == null)
                 actionFlags |= ACTION_FLAGS_NO_KEY_PREVIEW;
             switch (mCode) {
-            case KeyCode.DELETE, KeyCode.DELETE_WORD,
+            case KeyCode.DELETE, KeyCode.DELETE_WORD, KeyCode.FORWARD_DELETE, KeyCode.FORWARD_DELETE_WORD,
                     KeyCode.ARROW_LEFT, KeyCode.ARROW_RIGHT, KeyCode.ARROW_UP, KeyCode.ARROW_DOWN,
                     KeyCode.WORD_LEFT, KeyCode.WORD_RIGHT, KeyCode.PAGE_UP, KeyCode.PAGE_DOWN:
                 // repeating is disabled if a key is configured with pop-ups

@@ -1738,7 +1738,8 @@ public class LatinIME extends InputMethodService implements
                 if (!mInputLogic.mConnection.canDeleteCharacters())
                     return;
                 break;
-            case KeyCode.ARROW_RIGHT, KeyCode.ARROW_DOWN, KeyCode.WORD_RIGHT, KeyCode.PAGE_DOWN:
+            case KeyCode.FORWARD_DELETE, KeyCode.FORWARD_DELETE_WORD, KeyCode.ARROW_RIGHT,
+                    KeyCode.ARROW_DOWN, KeyCode.WORD_RIGHT, KeyCode.PAGE_DOWN:
                 if (!mInputLogic.mConnection.canForwardDeleteCharacters())
                     return;
                 break;

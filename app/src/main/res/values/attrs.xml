@@ -232,6 +232,8 @@
         <attr name="iconShiftKey" format="reference" />
         <attr name="iconDeleteKey" format="reference" />
         <attr name="iconDeleteWordKey" format="reference" />
+        <attr name="iconForwardDelKey" format="reference" />
+        <attr name="iconForwardDelWordKey" format="reference" />
         <attr name="iconSettingsKey" format="reference" />
         <attr name="iconSpaceKey" format="reference" />
         <attr name="iconEnterKey" format="reference" />

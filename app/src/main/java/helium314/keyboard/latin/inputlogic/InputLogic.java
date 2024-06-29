@@ -681,6 +681,19 @@ public final class InputLogic {
                 // Back-word is a functional key, but it affects the contents of the editor.
                 inputTransaction.setDidAffectContents();
                 break;
+            case KeyCode.FORWARD_DELETE:
+                // todo: "This is bad for many reasons (there are race conditions with commits)" - handleBackspaceEvent
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_FORWARD_DEL);
+                // Forward-del is a functional key, but it affects the contents of the editor.
+                inputTransaction.setDidAffectContents();
+                break;
+            case KeyCode.FORWARD_DELETE_WORD:
+                // todo: this approach might be frowned upon, has similar issue to word left/right
+                // (but at least doesn't fail to delete punctuations at the end of text) TODO DONTCOMMIT check..
+                sendDownUpKeyEventWithMetaState(KeyEvent.KEYCODE_FORWARD_DEL, KeyEvent.META_CTRL_ON);
+                // Forward-word-del is a functional key, but it affects the contents of the editor.
+                inputTransaction.setDidAffectContents();
+                break;
             case KeyCode.SHIFT:
                 performRecapitalization(inputTransaction.getMSettingsValues());
                 inputTransaction.requireShiftUpdate(InputTransaction.SHIFT_UPDATE_NOW);

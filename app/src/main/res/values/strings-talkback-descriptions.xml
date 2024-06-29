@@ -37,6 +37,10 @@
     <string name="spoken_description_delete">Delete</string>
     <!-- Spoken description for the "Delete word" keyboard key. -->
     <string name="spoken_description_delete_word">Delete word</string>
+    <!-- Spoken description for the "Forward delete" keyboard key. -->
+    <string name="spoken_description_forward_del">Forward delete</string>
+    <!-- Spoken description for the "Forward delete word" keyboard key. -->
+    <string name="spoken_description_forward_del_word">Forward delete word</string>
     <!-- Spoken description for the "To Symbol" keyboard key. -->
     <string name="spoken_description_to_symbol">Symbols</string>
     <!-- Spoken description for the "To Alpha" keyboard key. -->

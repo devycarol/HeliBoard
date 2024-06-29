@@ -104,6 +104,30 @@ class KeyboardActionListenerImpl(private val latinIME: LatinIME, private val inp
         inputLogic.mConnection.setSelection(start, end)
     }
 
+    override fun onMoveForwardDeletePointer(steps: Int) {
+        inputLogic.finishInput()
+        val start = inputLogic.mConnection.expectedSelectionStart
+        var actualSteps = 0 // corrected steps to avoid splitting chars belonging to the same codepoint
+        if (steps < 0) {
+            val text = inputLogic.mConnection.getSelectedText(0)
+            if (text == null) actualSteps = steps
+            else loopOverCodePoints(text) {
+                actualSteps -= Character.charCount(it)
+                actualSteps <= steps
+            }
+        } else {
+            val text = inputLogic.mConnection.getTextAfterCursor(steps * 4, 0)
+            if (text == null) actualSteps = steps
+            else loopOverCodePointsBackwards(text) {
+                actualSteps += Character.charCount(it)
+                actualSteps >= steps
+            }
+        }
+        val end = inputLogic.mConnection.expectedSelectionEnd + actualSteps
+        if (end < start) return
+        inputLogic.mConnection.setSelection(start, end)
+    }
+
     override fun onUpWithDeletePointerActive() {
         if (!inputLogic.mConnection.hasSelection()) return
         inputLogic.finishInput()

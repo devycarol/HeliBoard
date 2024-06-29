@@ -11,6 +11,8 @@ object KeyLabel {
     const val ACTION = "action"
     const val DELETE = "delete"
     const val DELETE_WORD = "delete_word"
+    const val FORWARD_DEL = "forward_del"
+    const val FORWARD_DEL_WORD = "forward_del_word"
     const val SHIFT = "shift"
     const val NUMPAD = "numpad"
     const val SYMBOL = "symbol"

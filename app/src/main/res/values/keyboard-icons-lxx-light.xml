@@ -13,6 +13,8 @@
         <item name="iconShiftKeyLocked">@drawable/sym_keyboard_shift_lock_lxx</item>
         <item name="iconDeleteKey">@drawable/sym_keyboard_delete_lxx</item>
         <item name="iconDeleteWordKey">@drawable/sym_keyboard_delete_holo</item>
+        <item name="iconForwardDelKey">@drawable/sym_keyboard_forward_del_lxx</item>
+        <item name="iconForwardDelWordKey">@drawable/sym_keyboard_forward_del_holo</item>
         <item name="iconTabKey">@drawable/sym_keyboard_tab_lxx</item>
         <item name="iconSettingsKey">@drawable/sym_keyboard_settings_lxx</item>
         <item name="iconSpaceKey">@null</item>

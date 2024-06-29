@@ -437,9 +437,10 @@ sealed interface KeyData : AbstractKeyData {
     private fun getDefaultBackground(params: KeyboardParams): Int {
         // functional keys
         when (label) { // or use code?
-            KeyLabel.SYMBOL_ALPHA, KeyLabel.SYMBOL, KeyLabel.ALPHA, KeyLabel.COMMA, KeyLabel.PERIOD, KeyLabel.DELETE,
-            KeyLabel.DELETE_WORD, KeyLabel.COM, KeyLabel.LANGUAGE_SWITCH, KeyLabel.NUMPAD, KeyLabel.CTRL, KeyLabel.ALT,
-            KeyLabel.FN, KeyLabel.META, toolbarKeyStrings[ToolbarKey.EMOJI] -> return Key.BACKGROUND_TYPE_FUNCTIONAL
+            KeyLabel.SYMBOL_ALPHA, KeyLabel.SYMBOL, KeyLabel.ALPHA, KeyLabel.COMMA, KeyLabel.PERIOD,
+            KeyLabel.DELETE, KeyLabel.DELETE_WORD, KeyLabel.FORWARD_DEL, KeyLabel.FORWARD_DEL_WORD, KeyLabel.COM,
+            KeyLabel.LANGUAGE_SWITCH, KeyLabel.NUMPAD, KeyLabel.CTRL, KeyLabel.ALT, KeyLabel.FN, KeyLabel.META,
+            toolbarKeyStrings[ToolbarKey.EMOJI] -> return Key.BACKGROUND_TYPE_FUNCTIONAL
             KeyLabel.SPACE, KeyLabel.ZWNJ -> return Key.BACKGROUND_TYPE_SPACEBAR
             KeyLabel.ACTION -> return Key.BACKGROUND_TYPE_ACTION
             KeyLabel.SHIFT -> return getShiftBackground(params)
@@ -477,6 +478,9 @@ sealed interface KeyData : AbstractKeyData {
         KeyLabel.DELETE -> "!icon/delete_key|!code/key_delete"
         // todo: have a custom icon
         KeyLabel.DELETE_WORD -> "!icon/delete_word_key|!code/key_delete_word"
+        KeyLabel.FORWARD_DEL -> "!icon/forward_del_key|!code/key_forward_del"
+        // todo: have a custom icon
+        KeyLabel.FORWARD_DEL_WORD -> "!icon/forward_del_word_key|!code/key_forward_del_word"
         KeyLabel.SHIFT -> "${getShiftLabel(params)}|!code/key_shift"
 //        KeyLabel.EMOJI -> "!icon/emoji_normal_key|!code/key_emoji"
         // todo (later): label and popupKeys for .com should be in localeKeyTexts, handled similar to currency key

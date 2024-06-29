@@ -711,7 +711,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         return switch (code) {
             case Constants.CODE_SPACE -> sv.mSpaceSwipeHorizontal != KeyboardActionListener.SWIPE_NO_ACTION
                     || sv.mSpaceSwipeVertical != KeyboardActionListener.SWIPE_NO_ACTION;
-            case KeyCode.DELETE, KeyCode.DELETE_WORD -> sv.mDeleteSwipeEnabled;
+            case KeyCode.DELETE, KeyCode.DELETE_WORD, KeyCode.FORWARD_DELETE, KeyCode.FORWARD_DELETE_WORD -> sv.mDeleteSwipeEnabled;
             default -> false;
         };
     }
@@ -923,6 +923,18 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
                 }
                 mStartX += steps * sPointerStep;
                 sListener.onMoveDeletePointer(steps);
+            }
+        } else if (code == KeyCode.FORWARD_DELETE || code == KeyCode.FORWARD_DELETE_WORD) {
+            // Forward delete slider
+            // todo: a word-by-word slider for the forward-delete-word key would be ideal
+            int steps = (x - mStartX) / sPointerStep;
+            if (steps != 0) {
+                if (!mInHorizontalSwipe) {
+                    sTimerProxy.cancelKeyTimersOf(this);
+                    mInHorizontalSwipe = true;
+                }
+                mStartX += steps * sPointerStep;
+                sListener.onMoveForwardDeletePointer(steps);
             }
         }
     }

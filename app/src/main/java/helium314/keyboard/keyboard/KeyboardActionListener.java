@@ -99,6 +99,7 @@ public interface KeyboardActionListener {
     boolean onVerticalSpaceSwipe(int steps);
 
     void onMoveDeletePointer(int steps);
+    void onMoveForwardDeletePointer(int steps);
     void onUpWithDeletePointerActive();
     void resetMetaState();
 
@@ -143,6 +144,8 @@ public interface KeyboardActionListener {
         }
         @Override
         public void onMoveDeletePointer(int steps) {}
+        @Override
+        public void onMoveForwardDeletePointer(int steps) {}
         @Override
         public void onUpWithDeletePointerActive() {}
         @Override

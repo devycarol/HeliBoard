@@ -35,6 +35,8 @@ class KeyboardIconsSet {
         const val NAME_SHIFT_KEY_LOCKED = "shift_key_locked"
         const val NAME_DELETE_KEY = "delete_key"
         const val NAME_DELETE_WORD_KEY = "delete_word_key"
+        const val NAME_FORWARD_DEL_KEY = "forward_del_key"
+        const val NAME_FORWARD_DEL_WORD_KEY = "forward_del_word_key"
         const val NAME_SETTINGS_KEY = "settings_key"
         const val NAME_SPACE_KEY = "space_key"
         const val NAME_SPACE_KEY_FOR_NUMBER_LAYOUT = "space_key_for_number_layout"
@@ -67,6 +69,8 @@ class KeyboardIconsSet {
             NAME_SHIFT_KEY to                   R.styleable.Keyboard_iconShiftKey,
             NAME_DELETE_KEY to                  R.styleable.Keyboard_iconDeleteKey,
             NAME_DELETE_WORD_KEY to             R.styleable.Keyboard_iconDeleteWordKey,
+            NAME_FORWARD_DEL_KEY to             R.styleable.Keyboard_iconForwardDelKey,
+            NAME_FORWARD_DEL_WORD_KEY to        R.styleable.Keyboard_iconForwardDelWordKey,
             NAME_SETTINGS_KEY to                R.styleable.Keyboard_iconSettingsKey,
             NAME_SPACE_KEY to                   R.styleable.Keyboard_iconSpaceKey,
             NAME_ENTER_KEY to                   R.styleable.Keyboard_iconEnterKey,
