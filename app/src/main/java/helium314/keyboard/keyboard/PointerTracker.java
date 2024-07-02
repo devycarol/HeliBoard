@@ -883,7 +883,8 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         // see https://github.com/openboard-team/openboard/issues/411
         if (System.currentTimeMillis() < mStartTime + fastTypingTimeout && sTypingTimeRecorder.isInFastTyping(eventTime))
             return;
-        if (code == Constants.CODE_SPACE) {
+    switch (code) {
+        case Constants.CODE_SPACE -> {
             int dX = x - mStartX;
             int dY = y - mStartY;
 
@@ -913,7 +914,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
                     mStartX += stepsX * sPointerStep;
                 }
             }
-        } else if (code == KeyCode.DELETE) {
+        } case KeyCode.DELETE -> {
             // Delete slider
             int steps = (x - mStartX) / sPointerStep;
             if (steps != 0) {
@@ -924,7 +925,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
                 mStartX += steps * sPointerStep;
                 sListener.onMoveDeletePointer(steps);
             }
-        } else if (code == KeyCode.FORWARD_DELETE) {
+        } case KeyCode.FORWARD_DELETE -> {
             // Forward delete slider
             int steps = (x - mStartX) / sPointerStep;
             if (steps != 0) {
@@ -935,7 +936,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
                 mStartX += steps * sPointerStep;
                 sListener.onMoveForwardDeletePointer(steps);
             }
-        } else if (code == KeyCode.DELETE_WORD) {
+        } case KeyCode.DELETE_WORD -> {
             // Word-delete slider
             int steps = (x - mStartX) / WORD_STEP;
             if (steps != 0) {
@@ -946,7 +947,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
                 mStartX += steps * sPointerStep;
                 sListener.onMoveWordDeletePointer(steps);
             }
-        } else if (code == KeyCode.FORWARD_DELETE_WORD) {
+        } case KeyCode.FORWARD_DELETE_WORD -> {
             // Forward word-delete slider
             int steps = (x - mStartX) / WORD_STEP;
             if (steps != 0) {
@@ -958,7 +959,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
                 sListener.onMoveForwardWordDeletePointer(steps);
             }
         }
-    }
+    }}
 
     private void onMoveEventInternal(final int x, final int y, final long eventTime) {
         final Key oldKey = mCurrentKey;
