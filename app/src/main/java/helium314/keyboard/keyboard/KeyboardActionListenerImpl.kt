@@ -9,6 +9,10 @@ import helium314.keyboard.latin.common.InputPointers
 import helium314.keyboard.latin.common.StringUtils
 import helium314.keyboard.latin.common.loopOverCodePoints
 import helium314.keyboard.latin.common.loopOverCodePointsBackwards
+import helium314.keyboard.latin.common.nextSelecteeEnd
+import helium314.keyboard.latin.common.nextSelecteeStart
+import helium314.keyboard.latin.common.prevSelecteeEnd
+import helium314.keyboard.latin.common.prevSelecteeStart
 import helium314.keyboard.latin.inputlogic.InputLogic
 import helium314.keyboard.latin.settings.Settings
 import kotlin.math.abs
@@ -82,7 +86,13 @@ class KeyboardActionListenerImpl(private val latinIME: LatinIME, private val inp
 
     override fun onMoveDeletePointer(steps: Int) {
         inputLogic.finishInput()
-        val end = inputLogic.mConnection.expectedSelectionEnd
+        var start = inputLogic.mConnection.expectedSelectionStart
+        var end = inputLogic.mConnection.expectedSelectionEnd
+        if (start > end) {
+            val tmp = start
+            start = end
+            end = tmp
+        }
         var actualSteps = 0 // corrected steps to avoid splitting chars belonging to the same codepoint
         if (steps > 0) {
             val text = inputLogic.mConnection.getSelectedText(0)
@@ -99,14 +109,20 @@ class KeyboardActionListenerImpl(private val latinIME: LatinIME, private val inp
                 actualSteps <= steps
             }
         }
-        val start = inputLogic.mConnection.expectedSelectionStart + actualSteps
-        if (start > end) return
-        inputLogic.mConnection.setSelection(start, end)
+        val actualStart = start + actualSteps
+        if (actualStart > end) return
+        inputLogic.mConnection.setSelection(actualStart, end)
     }
 
     override fun onMoveForwardDeletePointer(steps: Int) {
         inputLogic.finishInput()
-        val start = inputLogic.mConnection.expectedSelectionStart
+        var start = inputLogic.mConnection.expectedSelectionStart
+        var end = inputLogic.mConnection.expectedSelectionEnd
+        if (start > end) {
+            val tmp = start
+            start = end
+            end = tmp
+        }
         var actualSteps = 0 // corrected steps to avoid splitting chars belonging to the same codepoint
         if (steps < 0) {
             val text = inputLogic.mConnection.getSelectedText(0)
@@ -123,9 +139,74 @@ class KeyboardActionListenerImpl(private val latinIME: LatinIME, private val inp
                 actualSteps >= steps
             }
         }
-        val end = inputLogic.mConnection.expectedSelectionEnd + actualSteps
-        if (end < start) return
-        inputLogic.mConnection.setSelection(start, end)
+        val actualEnd = end + actualSteps
+        if (actualEnd < start) return
+        inputLogic.mConnection.setSelection(start, actualEnd)
+    }
+
+    override fun onMoveWordDeletePointer(steps: Int) {
+        inputLogic.finishInput()
+        var start = inputLogic.mConnection.expectedSelectionStart
+        var end = inputLogic.mConnection.expectedSelectionEnd
+        if (start > end) {
+            val tmp = start
+            start = end
+            end = tmp
+        }
+        val actualStart: Int
+        if (steps > 0) { // retract selection
+            val text = inputLogic.mConnection.getSelectedText(0)
+            if (text.isNullOrEmpty()) return
+            var actualSteps = 0
+            var i = 0
+            while (++i <= steps && actualSteps < text.length) {
+                actualSteps = nextSelecteeStart(text, actualSteps)
+            }
+            actualStart = start + actualSteps
+        } else { // extend selection
+            if (start == 0) return
+            val text = inputLogic.mConnection.getTextBeforeCursor(-steps * 32, 0)
+            if (text.isNullOrEmpty()) return
+            var startIndex = text.length
+            var i = 0
+            while (++i <= -steps && startIndex > 0) {
+                startIndex = prevSelecteeStart(text, startIndex)
+            }
+            actualStart = start - text.length + startIndex
+        }
+        inputLogic.mConnection.setSelection(actualStart, end)
+    }
+
+    override fun onMoveForwardWordDeletePointer(steps: Int) {
+        inputLogic.finishInput()
+        var start = inputLogic.mConnection.expectedSelectionStart
+        var end = inputLogic.mConnection.expectedSelectionEnd
+        if (start > end) {
+            val tmp = start
+            start = end
+            end = tmp
+        }
+        val actualEnd: Int
+        if (steps < 0) { // retract selection
+            val text = inputLogic.mConnection.getSelectedText(0)
+            if (text.isNullOrEmpty()) return
+            var endIndex = text.length
+            var i = 0
+            while (++i <= -steps && endIndex > 0) {
+                endIndex = prevSelecteeEnd(text, endIndex)
+            }
+            actualEnd = end - text.length + endIndex
+        } else { // extend selection
+            val text = inputLogic.mConnection.getTextAfterCursor(steps * 32, 0)
+            if (text.isNullOrEmpty()) return
+            var actualSteps = 0
+            var i = 0
+            while (++i <= steps && actualSteps < text.length) {
+                actualSteps = nextSelecteeEnd(text, actualSteps)
+            }
+            actualEnd = end + actualSteps
+        }
+        inputLogic.mConnection.setSelection(start, actualEnd)
     }
 
     override fun onUpWithDeletePointerActive() {

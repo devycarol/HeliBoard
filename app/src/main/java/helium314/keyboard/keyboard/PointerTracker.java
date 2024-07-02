@@ -78,6 +78,7 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
     // Parameters for pointer handling.
     private static PointerTrackerParams sParams;
     private static final int sPointerStep = (int)TypedValueCompat.dpToPx(10, Resources.getSystem().getDisplayMetrics());
+    private static final int WORD_STEP = sPointerStep * 3;
     private static GestureStrokeRecognitionParams sGestureStrokeRecognitionParams;
     private static GestureStrokeDrawingParams sGestureStrokeDrawingParams;
 
@@ -912,9 +913,8 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
                     mStartX += stepsX * sPointerStep;
                 }
             }
-        } else if (code == KeyCode.DELETE || code == KeyCode.DELETE_WORD) {
+        } else if (code == KeyCode.DELETE) {
             // Delete slider
-            // todo: a word-by-word slider for the delete-word key would be ideal
             int steps = (x - mStartX) / sPointerStep;
             if (steps != 0) {
                 if (!mInHorizontalSwipe) {
@@ -924,9 +924,8 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
                 mStartX += steps * sPointerStep;
                 sListener.onMoveDeletePointer(steps);
             }
-        } else if (code == KeyCode.FORWARD_DELETE || code == KeyCode.FORWARD_DELETE_WORD) {
+        } else if (code == KeyCode.FORWARD_DELETE) {
             // Forward delete slider
-            // todo: a word-by-word slider for the forward-delete-word key would be ideal
             int steps = (x - mStartX) / sPointerStep;
             if (steps != 0) {
                 if (!mInHorizontalSwipe) {
@@ -935,6 +934,28 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
                 }
                 mStartX += steps * sPointerStep;
                 sListener.onMoveForwardDeletePointer(steps);
+            }
+        } else if (code == KeyCode.DELETE_WORD) {
+            // Word-delete slider
+            int steps = (x - mStartX) / WORD_STEP;
+            if (steps != 0) {
+                if (!mInHorizontalSwipe) {
+                    sTimerProxy.cancelKeyTimersOf(this);
+                    mInHorizontalSwipe = true;
+                }
+                mStartX += steps * sPointerStep;
+                sListener.onMoveWordDeletePointer(steps);
+            }
+        } else if (code == KeyCode.FORWARD_DELETE_WORD) {
+            // Forward word-delete slider
+            int steps = (x - mStartX) / WORD_STEP;
+            if (steps != 0) {
+                if (!mInHorizontalSwipe) {
+                    sTimerProxy.cancelKeyTimersOf(this);
+                    mInHorizontalSwipe = true;
+                }
+                mStartX += steps * sPointerStep;
+                sListener.onMoveForwardWordDeletePointer(steps);
             }
         }
     }

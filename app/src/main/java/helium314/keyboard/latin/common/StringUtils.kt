@@ -55,6 +55,80 @@ fun hasLetterBeforeLastSpaceBeforeCursor(s: CharSequence): Boolean {
     return letter
 }
 
+fun selecteeStart(s: CharSequence, fromIndex: Int): Int {
+    if (fromIndex == 0) return 0
+    val text = if (s is String) s else s.toString()
+    val prevCodePoint = text.codePointBefore(fromIndex)
+    if (Character.isWhitespace(prevCodePoint)) return fromIndex
+    var start = fromIndex - Character.charCount(prevCodePoint)
+    val unitIsWord = Character.isLetter(prevCodePoint)
+    loopOverCodePointsBackwards(text.substring(0, start)) {
+        if (unitIsWord && Character.isLetter(it) || !(unitIsWord || Character.isWhitespace(it) || Character.isLetter(it))) {
+            start -= Character.charCount(it)
+            false
+        } else true
+    }
+    return start
+}
+
+fun selecteeEnd(s: CharSequence, fromIndex: Int): Int {
+    if (fromIndex == s.length) return fromIndex
+    val text = if (s is String) s else s.toString()
+    val nextCodePoint = text.codePointAt(fromIndex)
+    if (Character.isWhitespace(nextCodePoint)) return fromIndex
+    var end = fromIndex + Character.charCount(nextCodePoint)
+    val unitIsWord = Character.isLetter(nextCodePoint)
+    loopOverCodePoints(text.substring(end, text.length)) {
+        if (unitIsWord && Character.isLetter(it) || !(unitIsWord || Character.isWhitespace(it) || Character.isLetter(it))) {
+            end += Character.charCount(it)
+            false
+        } else true
+    }
+    return end
+}
+
+fun prevSelecteeEnd(text: CharSequence, fromIndex: Int): Int {
+    val start = selecteeStart(text, fromIndex)
+    if (start == 0) return 0
+    if (Character.isWhitespace(text[start - 1])) {
+        val before = text.subSequence(0, start)
+        // -1 -> 0, n -> n + 1
+        val lastNonSpace = before.indexOfLast { !it.isWhitespace() } + 1
+        return start - before.length + lastNonSpace
+    }
+    return start
+}
+
+fun prevSelecteeStart(text: CharSequence, fromIndex: Int): Int {
+    if (fromIndex == 0) return 0
+    if (Character.isWhitespace(text[fromIndex - 1])) {
+        val prevEnd = prevSelecteeEnd(text, fromIndex)
+        return selecteeStart(text, prevEnd)
+    }
+    return selecteeStart(text, fromIndex)
+}
+
+fun nextSelecteeStart(text: CharSequence, fromIndex: Int): Int {
+    val end = selecteeEnd(text, fromIndex)
+    if (end == text.length) return end
+    if (Character.isWhitespace(text[end])) {
+        val after = text.subSequence(end, text.length)
+        var firstNonSpace = after.indexOfFirst { !it.isWhitespace() }
+        if (firstNonSpace == -1) firstNonSpace = after.length
+        return end + firstNonSpace
+    }
+    return end
+}
+
+fun nextSelecteeEnd(text: CharSequence, fromIndex: Int): Int {
+    if (fromIndex == text.length) return fromIndex
+    if (Character.isWhitespace(text[fromIndex])) {
+        val nextStart = nextSelecteeStart(text, fromIndex)
+        return selecteeEnd(text, nextStart)
+    }
+    return selecteeEnd(text, fromIndex)
+}
+
 /** get the complete emoji at end of [s], considering that emojis can be joined with ZWJ resulting in different emojis */
 fun getFullEmojiAtEnd(s: CharSequence): String {
     val text = if (s is String) s else s.toString()

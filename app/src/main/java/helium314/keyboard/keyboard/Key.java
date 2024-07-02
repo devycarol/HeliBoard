@@ -515,20 +515,18 @@ public class Key implements Comparable<Key> {
     }
 
     public final boolean isModifier() {
-        return mCode == KeyCode.SHIFT || mCode == KeyCode.SYMBOL_ALPHA || mCode == KeyCode.ALPHA || mCode == KeyCode.SYMBOL
-                || mCode == KeyCode.CTRL || mCode == KeyCode.ALT || mCode == KeyCode.FN || mCode == KeyCode.META;
-    }
-
-    public final boolean isBackwardDeleter() {
-        return mCode == KeyCode.DELETE || mCode == KeyCode.DELETE_WORD;
-    }
-
-    public final boolean isForwardDeleter() {
-        return mCode == KeyCode.FORWARD_DELETE || mCode == KeyCode.FORWARD_DELETE_WORD;
+        return switch (mCode) {
+            case KeyCode.SHIFT, KeyCode.SYMBOL_ALPHA, KeyCode.ALPHA, KeyCode.SYMBOL, KeyCode.CTRL, KeyCode.ALT,
+                 KeyCode.FN, KeyCode.META -> true;
+            default -> false;
+        };
     }
 
     public final boolean isDeleter() {
-        return isBackwardDeleter() || isForwardDeleter();
+        return switch (mCode) {
+            case KeyCode.DELETE, KeyCode.DELETE_WORD, KeyCode.FORWARD_DELETE, KeyCode.FORWARD_DELETE_WORD -> true;
+            default -> false;
+        };
     }
 
     public final boolean isRepeatable() {
